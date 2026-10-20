@@ -1,0 +1,74 @@
+[
+  {
+    "id": "TC-01",
+    "query": "how is vram calculated",
+    "description": "Natural language query for VRAM calculation formula",
+    "target_entities": ["calculate_vram"],
+    "target_files": ["vram_calc.py"],
+    "expected_answer_keywords": ["params_billions", "bits", "overhead", "8"],
+    "reference_answer": "VRAM is calculated by multiplying params_billions, bits, and overhead (default 1.2), divided by 8."
+  },
+  {
+    "id": "TC-02",
+    "query": "calculate_vram",
+    "description": "Exact function name lookup (BM25 keyword test)",
+    "target_entities": ["calculate_vram"],
+    "target_files": ["vram_calc.py"],
+    "expected_answer_keywords": ["calculate_vram", "params_billions", "bits"],
+    "reference_answer": "The calculate_vram function calculates VRAM memory requirements in vram_calc.py."
+  },
+  {
+    "id": "TC-03",
+    "query": "how to run ollama inference and measure execution duration",
+    "description": "Multi-concept query (Ollama API + timing benchmark)",
+    "target_entities": ["run_inference"],
+    "target_files": ["vram_calc.py"],
+    "expected_answer_keywords": ["ollama.generate", "time.perf_counter", "duration"],
+    "reference_answer": "run_inference takes a model_name and prompt, calls ollama.generate, and measures duration with time.perf_counter."
+  },
+  {
+    "id": "TC-04",
+    "query": "how does AST parsing extract functions and classes from python files",
+    "description": "AST extraction logic test",
+    "target_entities": ["extract_chunks_from_file"],
+    "target_files": ["search_cli.py"],
+    "expected_answer_keywords": ["ast.parse", "ast.walk", "FunctionDef", "ClassDef", "get_source_segment"],
+    "reference_answer": "extract_chunks_from_file parses code with ast.parse, walks the tree to find FunctionDef and ClassDef nodes, and extracts the code slice using ast.get_source_segment."
+  },
+  {
+    "id": "TC-05",
+    "query": "traverse directory recursively while excluding virtual environments",
+    "description": "Directory pruning and traversal test",
+    "target_entities": ["scan_directory"],
+    "target_files": ["search_cli.py"],
+    "expected_answer_keywords": ["walk", "EXCLUDE_DIRS", "extract_chunks_from_file", "pruning"],
+    "reference_answer": "scan_directory uses Path.walk with top_down=True to prune excluded directories like .venv and calls extract_chunks_from_file on python files."
+  },
+  {
+    "id": "TC-06",
+    "query": "how is the hybrid search and reranking workflow implemented",
+    "description": "Hybrid search (RRF prefetch + CrossEncoder)",
+    "target_entities": ["cmd_search"],
+    "target_files": ["search_cli.py"],
+    "expected_answer_keywords": ["dense", "sparse", "Prefetch", "RRF", "CrossEncoder", "predict"],
+    "reference_answer": "cmd_search embeds the query with dense and sparse models, executes hybrid prefetch in Qdrant with RRF fusion, and re-ranks top candidates using CrossEncoder."
+  },
+  {
+    "id": "TC-07",
+    "query": "create qdrant collection with dense and sparse vector configurations",
+    "description": "Qdrant collection initialization",
+    "target_entities": ["ensure_collection"],
+    "target_files": ["search_cli.py"],
+    "expected_answer_keywords": ["create_collection", "VectorParams", "SparseVectorParams", "DENSE_DIM", "COSINE"],
+    "reference_answer": "ensure_collection checks if the collection exists and creates it with VectorParams for dense vectors and SparseVectorParams for sparse vectors."
+  },
+  {
+    "id": "TC-08",
+    "query": "how to connect to a postgresql database and run sql queries",
+    "description": "Negative out-of-domain query (should have zero relevant code chunks)",
+    "target_entities": [],
+    "target_files": [],
+    "expected_answer_keywords": ["not found", "does not contain", "no code"],
+    "reference_answer": "The codebase does not contain PostgreSQL connection logic or database drivers."
+  }
+]
